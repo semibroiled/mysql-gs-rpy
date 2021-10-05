@@ -331,6 +331,31 @@ VALUES ( %s, %s )
 
             print(result)
 
+        #Deleting Entries
+
+        #First make sure with SELECT
+
+        select_movies_query = '''
+        SELECT reviewer_id, movie_id FROM ratings
+        WHERE reviewer_id = 2'''
+
+        with connection.cursor() as cursor:
+            cursor.execute(select_movies_query)
+            for movie in cursor.fetchall():
+                print(movie)
+
+        #Is this what you expected? IF yes, then proceed to delete
+        confirm = input('Is this what you expected? Proceed with delete:\n')
+        if confirm:
+
+            delete_query= '''
+            DELETE FROM ratings WHERE reviewer_id=2'''
+
+            with connection.cursor() as cursor:
+                cursor.execute(delete_query)
+                connection.commit()
+
+
 
 
 except Error as e:
